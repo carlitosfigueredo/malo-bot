@@ -27,5 +27,14 @@ class MyClient(discord.Client):
 
         await self.tree.sync(guild=discord.Object(id=GUILD_ID))
 
+    async def on_message(self, message):
+        # Evitar que el bot se responda a sí mismo
+        if message.author == self.user:
+            return
+        if message.content.strip().lower() == '!love':
+            frase = random.choice(FRASES_LOVE)
+            await message.channel.send(frase)
+
+
 client = MyClient()
 client.run(TOKEN)
